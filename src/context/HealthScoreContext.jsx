@@ -19,7 +19,7 @@ export function HealthScoreProvider({ children }) {
     if (firedEvents.includes(eventType)) return;
     const boost = boosts[eventType];
     if (!boost) return;
-    setScore((prev) => Math.min(prev + boost.points, 72));
+    setScore((prev) => Math.min(prev + boost.points, 100));
     setFiredEvents((prev) => [...prev, eventType]);
     setToast(t(`boosts.${boost.labelKey}`));
     setTimeout(() => setToast(null), 2500);

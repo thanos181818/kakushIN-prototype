@@ -9,7 +9,6 @@ const LANGS = [
   { code: 'te', label: 'తెలు' },
   { code: 'gu', label: 'ગુજ' },
   { code: 'kn', label: 'ಕನ್' },
-  { code: 'ml', label: 'മല' },
   { code: 'pa', label: 'ਪੰ' },
 ];
 

@@ -82,7 +82,21 @@
     "lowRisk": "LOW RISK",
     "detectedKeyword": "Detected keyword",
     "legalContext": "Legal Context",
-    "noPatternsFound": "No common manipulation patterns found. However, always verify company registrations at sebi.gov.in before sharing any OTP or making payments."
+    "noPatternsFound": "No common manipulation patterns found. However, always verify company registrations at sebi.gov.in before sharing any OTP or making payments.",
+    "samples": [
+      {
+        "title": "Job Scam",
+        "text": "CONGRATULATIONS! You have been selected for a WORK FROM HOME job. Earn ₹5000 daily by just liking YouTube videos. No experience needed. Join our Telegram group NOW to start: https://t.me/quick_earn_india. LIMITED SLOTS LEFT!"
+      },
+      {
+        "title": "OTP Fraud",
+        "text": "Your SBI account has been blocked due to suspicious activity. To verify your identity, enter the OTP sent to your mobile number. Hurry, your account will be permanently closed in 30 minutes!"
+      },
+      {
+        "title": "Electricity Bill Scam",
+        "text": "URGENT: Your electricity bill for this month is pending. Click here to pay now and avoid disconnection: https://bit.ly/fake-bill-link"
+      }
+    ]
   },
   "twin": {
     "title": "Financial Twin",

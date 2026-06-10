@@ -8,7 +8,6 @@ import ta from './ta.json';
 import te from './te.json';
 import gu from './gu.json';
 import kn from './kn.json';
-import ml from './ml.json';
 import pa from './pa.json';
 
 i18n.use(initReactI18next).init({
@@ -21,7 +20,6 @@ i18n.use(initReactI18next).init({
     te: { translation: te },
     gu: { translation: gu },
     kn: { translation: kn },
-    ml: { translation: ml },
     pa: { translation: pa },
   },
   lng: 'en',
@@ -30,4 +28,3 @@ i18n.use(initReactI18next).init({
 });
 
 export default i18n;
-

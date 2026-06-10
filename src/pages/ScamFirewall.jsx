@@ -7,21 +7,6 @@ import PageHeader from '../components/PageHeader';
 import { analyzeMessage } from '../utils/scamAnalysis';
 import { useHealthScoreContext } from '../context/HealthScoreContext';
 
-const SAMPLES = [
-  {
-    title: "Job Scam",
-    text: "CONGRATULATIONS! You have been selected for a WORK FROM HOME job. Earn ₹5000 daily by just liking YouTube videos. No experience needed. Join our Telegram group NOW to start: https://t.me/quick_earn_india. LIMITED SLOTS LEFT!"
-  },
-  {
-    title: "OTP Fraud",
-    text: "Your SBI account has been blocked due to suspicious activity. To verify your identity, enter the OTP sent to your mobile number. Hurry, your account will be permanently closed in 30 minutes!"
-  },
-  {
-    title: "Electricity Bill Scam",
-    text: "URGENT: Your electricity bill for this month is pending. Click here to pay now and avoid disconnection: https://bit.ly/fake-bill-link"
-  }
-];
-
 const SEVERITY_CONFIG = {
   danger: {
     bg: 'bg-danger-light',
@@ -100,7 +85,7 @@ export default function ScamFirewall() {
             />
             
             <div className="flex flex-wrap gap-2 mb-3">
-              {SAMPLES.map((sample, idx) => (
+              {samples.map((sample, idx) => (
                 <button
                   key={idx}
                   onClick={() => {
@@ -108,7 +93,7 @@ export default function ScamFirewall() {
                     setStatus('idle');
                     setResult(null);
                   }}
-                  className="border border-primary/20 text-primary hover:bg-primary-light rounded-lg px-3 py-1.5 text-xs font-semibold transition-all"
+                  className="border border-primary/20 text-primary hover:bg-primary-light rounded-xl px-3 py-1.5 text-xs font-semibold transition-all"
                 >
                   {sample.title}
                 </button>
