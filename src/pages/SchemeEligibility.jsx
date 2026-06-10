@@ -30,7 +30,7 @@ export default function SchemeEligibility() {
 
       {!selectedScheme ? (
         <div className="space-y-6">
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {schemesData.map((scheme, idx) => (
               <motion.div
                 key={scheme.id}
@@ -115,8 +115,8 @@ export default function SchemeEligibility() {
             </div>
           </div>
 
-          <div className="p-8 grid grid-cols-5 gap-8">
-            <div className="col-span-3 space-y-8">
+          <div className="p-8 grid grid-cols-1 md:grid-cols-5 gap-8">
+            <div className="col-span-1 md:col-span-3 space-y-8">
               <section>
                 <h4 className="text-text-secondary text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
                   <Search size={14} className="text-primary" />
@@ -147,7 +147,7 @@ export default function SchemeEligibility() {
               </div>
             </div>
 
-            <div className="col-span-2 space-y-6">
+            <div className="col-span-1 md:col-span-2 space-y-6">
               <div className="bg-white border border-border-light rounded-2xl p-6 shadow-raised">
                 <h4 className="font-display font-bold text-text-primary mb-4">{t('schemes.whatYouNeed')}</h4>
                 <div className="space-y-3">

@@ -1,10 +1,10 @@
-import { Mic } from 'lucide-react';
+import { Mic, MicOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useVoiceNav } from '../hooks/useVoiceNav';
 
 export default function VoiceInput() {
   const { t } = useTranslation();
-  const { startListening, isListening, supported, navigatedTo } = useVoiceNav();
+  const { toggleListening, isListening, supported, navigatedTo } = useVoiceNav();
 
   if (!supported) return null;
 
@@ -27,18 +27,21 @@ export default function VoiceInput() {
 
       {/* Mic button */}
       <button
-        onClick={startListening}
-        disabled={isListening}
+        onClick={toggleListening}
         aria-label="Voice navigation"
-        className={`w-12 h-12 rounded-full bg-primary shadow-lg shadow-blue flex items-center justify-center relative transition-all hover:bg-primary-dark ${
-          isListening ? 'scale-110' : ''
+        className={`w-12 h-12 rounded-full shadow-lg flex items-center justify-center relative transition-all hover:scale-105 ${
+          isListening ? 'bg-danger text-white shadow-danger/30' : 'bg-primary text-white shadow-blue hover:bg-primary-dark'
         }`}
       >
         {/* Pulse ring when listening */}
         {isListening && (
-          <span className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+          <span className="absolute inset-0 rounded-full bg-danger/30 animate-ping" />
         )}
-        <Mic size={20} className="text-white relative z-10" />
+        {isListening ? (
+          <MicOff size={20} className="relative z-10" />
+        ) : (
+          <Mic size={20} className="relative z-10" />
+        )}
       </button>
     </div>
   );

@@ -75,9 +75,9 @@ export default function DocumentIntelligence() {
         subtitle={t('docs.subtitle')} 
       />
 
-      <div className="grid grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
         {/* Left: Action Area */}
-        <div className="col-span-3 space-y-4">
+        <div className="col-span-1 md:col-span-3 space-y-4">
           {status === 'idle' && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -222,7 +222,7 @@ export default function DocumentIntelligence() {
         </div>
 
         {/* Right: Info Sidebar */}
-        <div className="col-span-2 space-y-4">
+        <div className="col-span-1 md:col-span-2 space-y-4">
           {status === 'done' && (
             <div className="bg-white border border-border-light rounded-2xl p-6 shadow-card">
               <h3 className="font-display font-bold text-text-primary text-[15px] mb-4">{t('docs.documentMeta')}</h3>

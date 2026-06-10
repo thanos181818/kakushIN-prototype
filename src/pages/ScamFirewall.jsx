@@ -72,9 +72,9 @@ export default function ScamFirewall() {
         subtitle={t('scam.subtitle')} 
       />
 
-      <div className="grid grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
         {/* Left: Input Area */}
-        <div className="col-span-3 space-y-4">
+        <div className="col-span-1 md:col-span-3 space-y-4">
           <div className="bg-white border border-border-light rounded-2xl p-6 shadow-card">
             <textarea
               value={inputText}
@@ -215,7 +215,7 @@ export default function ScamFirewall() {
         </div>
 
         {/* Right: Educational Sidebar */}
-        <div className="col-span-2 space-y-4">
+        <div className="col-span-1 md:col-span-2 space-y-4">
           <div className="bg-white border border-border-light rounded-2xl p-6 shadow-card">
             <h3 className="font-display font-bold text-text-primary mb-4 flex items-center gap-2">
               <ShieldAlert size={18} className="text-primary" />

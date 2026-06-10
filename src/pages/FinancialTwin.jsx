@@ -39,9 +39,9 @@ export default function FinancialTwin() {
         subtitle={t('twin.subtitle')} 
       />
 
-      <div className="grid grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
         {/* Left: Controls */}
-        <div className="col-span-2 space-y-4">
+        <div className="col-span-1 md:col-span-2 space-y-4">
           <div className="bg-white border border-border-light rounded-2xl p-6 shadow-card">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-display font-bold text-text-primary text-[15px]">{t('twin.investmentPlan')}</h3>
@@ -116,7 +116,7 @@ export default function FinancialTwin() {
         </div>
 
         {/* Right: Visualization */}
-        <div className="col-span-3 space-y-4">
+        <div className="col-span-1 md:col-span-3 space-y-4">
           <div className="bg-white border border-border-light rounded-2xl p-6 shadow-card">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">

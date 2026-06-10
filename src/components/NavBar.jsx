@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Home, ShieldAlert, TrendingUp, Landmark, FileText, Mic } from 'lucide-react';
+import { Home, ShieldAlert, TrendingUp, Landmark, FileText } from 'lucide-react';
 import { useHealthScoreContext } from '../context/HealthScoreContext';
 import rajeshData from '../data/rajesh.json';
 
@@ -19,8 +19,8 @@ export default function NavBar() {
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-60 flex-shrink-0 bg-sidebar flex flex-col h-screen sticky top-0">
+      {/* Desktop Navigation Sidebar (hidden on mobile) */}
+      <aside className="hidden md:flex w-60 flex-shrink-0 bg-sidebar flex-col h-screen sticky top-0 overflow-hidden">
         {/* Branding */}
         <div className="p-6">
           <div className="flex items-center gap-3">
@@ -29,7 +29,7 @@ export default function NavBar() {
             </div>
             <div>
               <h1 className="font-display font-bold text-white text-lg leading-tight tracking-tight">
-                {t('app.name')}
+                ArthSaathi
               </h1>
               <p className="text-slate-500 text-[10px] font-body uppercase tracking-widest mt-0.5">
                 अर्थसाथी
@@ -68,7 +68,7 @@ export default function NavBar() {
           </div>
         </div>
 
-        {/* Navigation */}
+        {/* Navigation links (scrollable if screen is short) */}
         <nav className="flex-1 px-3 overflow-y-auto">
           <p className="text-slate-600 text-[11px] uppercase tracking-widest px-3 mb-2 font-bold">
             {t('nav.navigation')}
@@ -97,44 +97,27 @@ export default function NavBar() {
             ))}
           </div>
         </nav>
-
-        {/* Voice Footer */}
-        <div className="p-4">
-          <div className="p-3 rounded-xl bg-slate-900/50 border border-white/5 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-              <Mic size={16} className="text-primary" />
-            </div>
-            <div>
-              <p className="text-slate-300 text-[11px] font-semibold leading-none">{t('nav.voiceNav')}</p>
-              <p className="text-slate-500 text-[10px] mt-1 italic leading-none">"{t('nav.sayPageName')}"</p>
-            </div>
-          </div>
-        </div>
       </aside>
 
-      {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-[70px] bg-sidebar border-t border-white/10 flex items-center justify-around pb-safe z-50">
+      {/* Mobile Navigation Tab Bar (hidden on desktop) */}
+      <nav className="flex md:hidden fixed bottom-0 left-0 right-0 h-16 bg-sidebar border-t border-white/5 z-50 flex-row justify-around items-center px-4 shadow-raised">
         {TABS.map(({ path, icon: Icon, labelKey, badge }) => (
           <NavLink
             key={path}
             to={path}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-all ${
-                isActive
-                  ? 'text-primary'
-                  : 'text-slate-500 hover:text-slate-300'
+              `flex flex-col items-center justify-center gap-1 text-[10px] font-medium font-body transition-all relative py-1 ${
+                isActive ? 'text-primary' : 'text-slate-400 hover:text-slate-200'
               }`
             }
           >
-            <div className="relative">
-              <Icon size={20} />
-              {badge && (
-                <span className="absolute -top-1 -right-1 bg-danger text-white text-[9px] font-bold min-w-[14px] h-[14px] px-0.5 rounded-full flex items-center justify-center">
-                  {badge}
-                </span>
-              )}
-            </div>
-            <span className="text-[9px] font-medium font-body">{t(labelKey)}</span>
+            <Icon size={18} />
+            <span className="text-[10px]">{t(labelKey)}</span>
+            {badge && (
+              <span className="absolute top-0.5 right-1.5 bg-danger text-white text-[8px] font-bold min-w-[14px] h-[14px] px-0.5 rounded-full flex items-center justify-center">
+                {badge}
+              </span>
+            )}
           </NavLink>
         ))}
       </nav>

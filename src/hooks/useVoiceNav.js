@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -21,49 +21,134 @@ export function useVoiceNav() {
   const [transcript, setTranscript] = useState('');
   const [supported, setSupported] = useState(false);
   const [navigatedTo, setNavigatedTo] = useState('');
+  
+  const recognitionRef = useRef(null);
+  const shouldListenRef = useRef(false);
 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     setSupported(!!SpeechRecognition);
+    
+    return () => {
+      if (recognitionRef.current) {
+        shouldListenRef.current = false;
+        recognitionRef.current.stop();
+      }
+    };
   }, []);
 
-  const startListening = () => {
+  const toggleListening = useCallback(() => {
+    if (isListening) {
+      shouldListenRef.current = false;
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      setIsListening(false);
+      return;
+    }
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = LANGUAGE_MAP[i18n.language] || 'en-IN';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 3;
-
-    recognition.onstart = () => {
-      setIsListening(true);
-      setNavigatedTo('');
-    };
-    recognition.onend = () => setIsListening(false);
-
-    recognition.onresult = (event) => {
-      const spoken = event.results[0][0].transcript.toLowerCase().trim();
-      setTranscript(spoken);
+    shouldListenRef.current = true;
+    setIsListening(true);
+    
+    const startRecognition = () => {
+      if (!shouldListenRef.current) return;
       
-      // Get voice commands from translations
-      const commandsMap = t('voice.commandsMap', { returnObjects: true });
+      const recognition = new SpeechRecognition();
+      recognition.lang = LANGUAGE_MAP[i18n.language] || 'en-IN';
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        setNavigatedTo('');
+      };
       
-      // Check for matches against each route's keywords
-      for (const [route, keywords] of Object.entries(commandsMap)) {
-        if (keywords.some(keyword => spoken.includes(keyword.toLowerCase()))) {
-          setNavigatedTo(keywords[0]);
+      recognition.onend = () => {
+        if (shouldListenRef.current) {
+            setTimeout(() => {
+               if (shouldListenRef.current) startRecognition();
+            }, 100);
+        } else {
+            setIsListening(false);
+        }
+      };
+      
+      recognition.onerror = (event) => {
+         console.warn("Speech recognition error", event.error);
+         if (event.error === 'not-allowed' || event.error === 'audio-capture') {
+            shouldListenRef.current = false;
+            setIsListening(false);
+         }
+      };
+
+      recognition.onresult = (event) => {
+        if (!event.results || event.results.length === 0) return;
+        const lastIndex = event.results.length - 1;
+        const spoken = event.results[lastIndex][0].transcript.toLowerCase().trim();
+        setTranscript(spoken);
+        
+        const commandsMap = t('voice.commandsMap', { returnObjects: true });
+        const commands = t('voice.commands', { returnObjects: true });
+
+        let routePath = '';
+        let matchedPhrase = '';
+
+        if (commandsMap && typeof commandsMap === 'object' && !Array.isArray(commandsMap)) {
+          const routeKeys = {
+            dashboard: '/dashboard',
+            scam: '/scam',
+            twin: '/twin',
+            schemes: '/schemes',
+            docs: '/docs',
+          };
+          for (const [key, phrases] of Object.entries(commandsMap)) {
+            if (Array.isArray(phrases)) {
+              const found = phrases.find(p => spoken.includes(p.toLowerCase()));
+              if (found) {
+                routePath = routeKeys[key];
+                matchedPhrase = found;
+                break;
+              }
+            }
+          }
+        }
+
+        if (!routePath && Array.isArray(commands)) {
+          const routeList = ['/dashboard', '/scam', '/twin', '/schemes', '/docs'];
+          for (let i = 0; i < commands.length; i++) {
+            if (spoken.includes(commands[i].toLowerCase())) {
+              routePath = routeList[i];
+              matchedPhrase = commands[i];
+              break;
+            }
+          }
+        }
+
+        if (routePath) {
+          shouldListenRef.current = false;
+          setNavigatedTo(matchedPhrase);
+          recognition.stop();
           setTimeout(() => {
-            navigate(`/${route}`);
+            navigate(routePath);
             setNavigatedTo('');
           }, 800);
-          return;
         }
+      };
+
+      try {
+        recognition.start();
+        recognitionRef.current = recognition;
+      } catch (e) {
+        console.error("Could not start recognition", e);
       }
     };
+    
+    startRecognition();
+    
+  }, [isListening, i18n.language, navigate, t]);
 
-    recognition.start();
-  };
-
-  return { startListening, isListening, transcript, supported, navigatedTo };
+  return { toggleListening, isListening, transcript, supported, navigatedTo };
 }

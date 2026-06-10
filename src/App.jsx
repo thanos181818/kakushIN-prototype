@@ -14,11 +14,11 @@ function App() {
   const showNav = location.pathname !== '/';
 
   return (
-    <div className="flex h-screen bg-app-bg overflow-hidden">
+    <div className="flex flex-col md:flex-row h-screen bg-app-bg overflow-hidden">
       {showNav && <NavBar />}
       
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-content mx-auto px-8 py-7 pb-[90px] md:pb-7">
+      <main className="flex-1 overflow-y-auto pb-16 md:pb-0">
+        <div className="max-w-content mx-auto px-4 md:px-8 py-5 md:py-7">
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<Onboarding />} />

@@ -36,7 +36,7 @@ export default function Dashboard() {
         subtitle="Monday, 25 November · Pune" 
       />
 
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {/* Income Card */}
         <div className="bg-white border border-border-light rounded-2xl p-5 shadow-card">
           <p className="text-text-secondary text-xs font-body uppercase tracking-wider mb-1">{t('dashboard.income')}</p>
@@ -79,9 +79,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
         {/* Income Breakdown */}
-        <div className="col-span-3 bg-white border border-border-light rounded-2xl shadow-card overflow-hidden">
+        <div className="col-span-1 md:col-span-3 bg-white border border-border-light rounded-2xl shadow-card overflow-hidden">
           <div className="px-6 py-4 border-b border-app-bg">
             <h2 className="font-display text-[15px] font-semibold text-text-primary">{t('dashboard.incomeTierBreakdown')}</h2>
           </div>
@@ -116,7 +116,7 @@ export default function Dashboard() {
         </div>
 
         {/* Scheme Alert */}
-        <div className="col-span-2 bg-primary-light border border-primary-mid border-l-4 border-l-primary rounded-2xl p-6 flex flex-col justify-between shadow-card">
+        <div className="col-span-1 md:col-span-2 bg-primary-light border border-primary-mid border-l-4 border-l-primary rounded-2xl p-6 flex flex-col justify-between shadow-card">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Zap size={18} className="text-primary fill-primary" />
@@ -138,7 +138,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Transactions */}
         <div className="bg-white border border-border-light rounded-2xl shadow-card overflow-hidden">
           <div className="px-6 py-4 border-b border-app-bg flex justify-between items-center">
